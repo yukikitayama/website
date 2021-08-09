@@ -34,8 +34,14 @@ collection = db[COLLECTION]
 
 def lambda_handler(event, context):
 
-    # Get data from MongoDB, using json_util for BSON ID
-    posts = [json.loads(json_util.dumps(post)) for post in collection.find()]
+    # Get data from MongoDB
+    posts = []
+    for post in collection.find():
+        # Use json_util for BSON ID
+        post = json.loads(json_util.dumps(post))
+        # Extract ID string
+        post['_id'] = post['_id']['$oid']
+        posts.append(post)
 
     # Return format requirements for API Gateway
     response = {

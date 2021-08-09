@@ -1,1 +1,13 @@
-<mat-toolbar color="primary">Yuki Kitayama</mat-toolbar>
+<mat-toolbar color="primary">
+  <!-- The menu is attached to and opened via application of the matMenuTriggerFor directive -->
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item><a routerLink="/dashboard">Dashboard</a></button>
+    <button mat-menu-item><a routerLink="/posts">Posts</a></button>
+  </mat-menu>
+  <span><a routerLink="/">Yuki Kitayama</a></span>
+  <span class="spacer"></span>
+  <a mat-button>Login</a>
+</mat-toolbar>

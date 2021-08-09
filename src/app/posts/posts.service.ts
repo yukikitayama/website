@@ -21,6 +21,7 @@ export class PostsService {
 
   getPosts() {
     // return [...this.posts];
+    console.log('Getting posts from backend...')
     this.http
       .get<{statusCode: number, body: any}>(API_URL + '/posts')
       .pipe(map((postData) => {
@@ -45,4 +46,17 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
+  getPost(id: string) {
+    return {...this.posts.find(p => p.id === id)};
+  }
+
+  updatePost(id: string, title: string, category: string, date: string, content: string) {
+    const post: Post = {
+      id: id,
+      title: title,
+      category: category,
+      date: date,
+      content: content
+    }
+  }
 }
