@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -17,7 +18,7 @@ export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getPosts() {
     // return [...this.posts];
@@ -51,12 +52,17 @@ export class PostsService {
   }
 
   updatePost(id: string, title: string, category: string, date: string, content: string) {
-    const post: Post = {
+    const payload = {
       id: id,
       title: title,
       category: category,
       date: date,
       content: content
     }
+    this.http.put(API_URL + '/posts', payload)
+      .subscribe(response => {
+        this.router.navigate(['/posts']);
+        // console.log(response);
+      });
   }
 }

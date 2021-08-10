@@ -13,11 +13,8 @@ import { Post } from '../post.model';
 export class PostEditComponent implements OnInit {
   post: Post;
   form: FormGroup;
+  isLoading = false;
   private postId: string;
-  enteredTitle = 'initial title';
-  enteredCategory = '';
-  enteredDate = '';
-  enteredContent = '';
 
   constructor(public postsService: PostsService, public route: ActivatedRoute) {}
 
@@ -31,19 +28,24 @@ export class PostEditComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('postId')) {
         this.postId = paramMap.get('postId');
+        this.isLoading = true;
         this.post = this.postsService.getPost(this.postId);
+        this.isLoading = false;
         // console.log(this.post);
       }
     });
   }
 
-  onUpdatePost(form: NgForm) {
+  onSavePost(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    console.log(form.value.title);
-    console.log(form.value.category);
-    console.log(form.value.date);
-    console.log(form.value.content);
+    this.isLoading = true;
+    this.postsService.updatePost(
+      this.postId,
+      form.value.title,
+      form.value.category,
+      form.value.date,
+      form.value.content);
   }
 }
