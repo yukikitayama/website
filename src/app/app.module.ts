@@ -20,6 +20,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostEditComponent } from './posts/post-edit/post-edit.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AppRoutingModule } from './app-routing.module';
     HeaderComponent,
     DashboardComponent,
     PostListComponent,
-    PostEditComponent
+    PostEditComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
