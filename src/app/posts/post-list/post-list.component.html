@@ -10,7 +10,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <article [innerHTML]="post.content"></article>
-    <mat-action-row>
+    <mat-action-row *ngIf="userIsAuthenticated">
       <a mat-raised-button color="accent" [routerLink]="['/edit', post.id]">Edit</a>
     </mat-action-row>
   </mat-expansion-panel>

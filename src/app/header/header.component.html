@@ -9,5 +9,6 @@
   </mat-menu>
   <span><a routerLink="/">Yuki Kitayama</a></span>
   <span class="spacer"></span>
-  <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
+  <a mat-button routerLink="/login" routerLinkActive="mat-accent" *ngIf="!userIsAuthenticated">Login</a>
+  <a mat-button *ngIf="userIsAuthenticated" (click)="onLogout()">Logout</a>
 </mat-toolbar>
