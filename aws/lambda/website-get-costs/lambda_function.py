@@ -34,16 +34,24 @@ def lambda_handler(event, context):
         Metrics=['BlendedCost']
     )
     
-    date_to_cost = {}
+    dates = []
+    costs = []
     for daily_data in response['ResultsByTime']:
         date = daily_data['TimePeriod']['Start']
+        dates.append(date)
         cost = daily_data['Total']['BlendedCost']['Amount']
-        date_to_cost[date] = round(float(cost), 2)
-    pprint.pprint(date_to_cost)
-    
+        costs.append(round(float(cost), 2))
+
+    body = {
+        'dates': dates,
+        'costs': costs
+    }
+    print('body:')
+    pprint.pprint(body)
+
     return {
         'statusCode': 200,
-        'body': date_to_cost
+        'body': body
     }
 
 

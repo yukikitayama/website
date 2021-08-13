@@ -11,7 +11,7 @@ SECRET_ID_02 = 'authentication-website'
 REGION_NAME = 'us-west-1'
 DATABASE = 'node-angular'
 COLLECTION = 'users'
-EXP_DAYS = 1
+EXP_MINUTES = 60
 
 
 def get_secret(secret_id: str, region_name: str) -> dict:
@@ -71,7 +71,7 @@ def lambda_handler(event, context):
             {
                 'email': user['email'], 
                 'id': str(user['_id']), 
-                'exp': datetime.utcnow() + timedelta(days=EXP_DAYS)
+                'exp': datetime.utcnow() + timedelta(minutes=EXP_MINUTES)
             }, 
             key,
             algorithm="HS256"
@@ -80,7 +80,8 @@ def lambda_handler(event, context):
         return {
             'statusCode': 200,
             'body': {
-                'token': encoded
+                'token': encoded,
+                'expiresIn': EXP_MINUTES * 60
             }
         }
     
