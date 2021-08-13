@@ -4,8 +4,10 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item><a routerLink="/dashboard">Dashboard</a></button>
-    <button mat-menu-item><a routerLink="/posts">Posts</a></button>
+    <ul>
+      <li><a mat-button routerLink="/dashboard">Dashboard</a></li>
+      <li><a mat-button routerLink="/posts">Posts</a></li>
+    </ul>
   </mat-menu>
   <span><a routerLink="/">Yuki Kitayama</a></span>
   <span class="spacer"></span>

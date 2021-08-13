@@ -14,7 +14,18 @@
     <mat-card-subtitle>of running this website</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>{{ costs }}</p>
+
+    <!-- <google-chart #chart
+      [title]="title"
+      [type]="type"
+      [data]="data"
+      [options]="options"
+      [width]="width"
+      [height]="height">
+    </google-chart> -->
+
+    <div echarts [options]="options" class="demo-chart"></div>
+
   </mat-card-content>
 </mat-card>
 
@@ -24,10 +35,8 @@
   </mat-card-header>
   <mat-card-content>
     <ul>
-      <li>Add login button at the top right and allow Yuki to be logged in mode.</li>
       <li>Update get-post Lambda to get a single post, and allow edit page to load content even if you reload edit page. Probably I need to add param to API gateway, and add if statement to Lambda.</li>
       <li>Add pagination to the list of posts.</li>
-      <li>Add architecture image to dashboard.</li>
       <li>Add a step to check whether token is valid (meaning decode the token with the same secret) to update-post Lambda.</li>
     </ul>
   </mat-card-content>
