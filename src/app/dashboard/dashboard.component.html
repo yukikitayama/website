@@ -1,53 +1,68 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>GitHub</mat-card-title>
-    <mat-card-subtitle>The codes of this website are available at</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p><a href="https://github.com/yukikitayama/website" target="_blank" class="pl-4 text-secondary">https://github.com/yukikitayama/website</a></p>
-  </mat-card-content>
-</mat-card>
+<main class="pb-5">
 
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Cost</mat-card-title>
-    <mat-card-subtitle>of running this website</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>GitHub</mat-card-title>
+      <mat-card-subtitle>The codes of this website are available at</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><a href="https://github.com/yukikitayama/website" target="_blank" class="pl-4 text-secondary">https://github.com/yukikitayama/website</a></p>
+    </mat-card-content>
+  </mat-card>
 
-    <!-- <google-chart #chart
-      [title]="title"
-      [type]="type"
-      [data]="data"
-      [options]="options"
-      [width]="width"
-      [height]="height">
-    </google-chart> -->
+  <div class="row">
 
-    <div echarts [options]="options" class="demo-chart"></div>
+    <div class="col-md">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Cost</mat-card-title>
+          <mat-card-subtitle>of running this website</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-spinner *ngIf="costsIsLoading"></mat-spinner>
+          <div echarts [options]="options" *ngIf="!costsIsLoading" class="demo-chart"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-  </mat-card-content>
-</mat-card>
+    <div class="col-md">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Posts</mat-card-title>
+          <mat-card-subtitle>Number of posts by category</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-spinner *ngIf="postsIsLoading"></mat-spinner>
+          <div echarts [options]="optionsPostsPieChart" *ngIf="!postsIsLoading" class="demo-chart"></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>TODO</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <ul>
-      <li>Update get-post Lambda to get a single post, and allow edit page to load content even if you reload edit page. Probably I need to add param to API gateway, and add if statement to Lambda.</li>
-      <li>Add pagination to the list of posts.</li>
-      <li>Add a step to check whether token is valid (meaning decode the token with the same secret) to update-post Lambda.</li>
-    </ul>
-  </mat-card-content>
-</mat-card>
+  </div>
 
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Architecture</mat-card-title>
-    <mat-card-subtitle>of this website</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <img src="../../assets/website_architecture.png" class="img-fluid" alt="Architecture image">
-  </mat-card-content>
-</mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Architecture</mat-card-title>
+      <mat-card-subtitle>of this website</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <img src="../../assets/website_architecture.png" class="img-fluid" alt="Architecture image">
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>TODO</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>Update get-post Lambda to get a single post, and allow edit page to load content even if you reload edit page. Probably I need to add param to API gateway, and add if statement to Lambda.</li>
+        <li>Add a step to check whether token is valid (meaning decode the token with the same secret) to update-post Lambda.</li>
+        <li>Add API Gateway caching to architecture diagram.</li>
+        <li>Develop Lambda/EventBridge to insert previous day cost to MongoDb and schedule daily.</li>
+        <li>Add Lambda/EventBridge to architecture diagram</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+</main>

@@ -3,6 +3,10 @@ mat-card {
 }
 
 .demo-chart {
-  /* height: 400px; */
+  height: 30vh;
   width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 const API_URL = environment.apiUrl;
@@ -11,6 +12,10 @@ export class DashboardService {
   private datesUpdated = new Subject<string[]>();
   private costs: number[];
   private costsUpdated = new Subject<number[]>();
+  private category: string[];
+  private count: number[];
+  private postData: {value: number, name: string}[];
+  private dashboardPostsUpdated = new Subject<{value: number, name: string}[]>();
 
   constructor(private http: HttpClient) {}
 
@@ -33,5 +38,34 @@ export class DashboardService {
 
   getCostUpdateListener() {
     return this.costsUpdated.asObservable();
+  }
+
+  getPostCountByCategory() {
+    this.http
+      .get<{message: string, data: {category: string, count: number}[]}>(API_URL + '/dashboard/posts')
+      .pipe(
+        map((postData) => {
+          // console.log(postData);
+          return {
+            posts: postData.data.map(item => {
+              // console.log(item);
+              return {
+                value: item.count,
+                name: item.category
+              };
+            })
+          };
+        })
+      )
+      .subscribe(postData => {
+        // console.log(postData.posts);
+        this.postData = postData.posts;
+        // console.log(this.postData);
+        this.dashboardPostsUpdated.next([...this.postData])
+      });
+  }
+
+  getDashboardPostsUpdateListener() {
+    return this.dashboardPostsUpdated.asObservable();
   }
 }

@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -49,6 +50,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
+    MatPaginatorModule,
     NgbModule,
     GoogleChartsModule,
     NgxEchartsModule.forRoot({

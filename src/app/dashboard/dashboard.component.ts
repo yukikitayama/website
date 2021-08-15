@@ -16,10 +16,14 @@ const API_URL = environment.apiUrl;
 })
 export class DashboardComponent implements OnInit {
   options: any;
+  optionsPostsPieChart: any;
   dates: string[];
   costs: number[];
+  costsIsLoading = false;
+  postsIsLoading = false;
   private datesSub: Subscription;
   private costsSub: Subscription;
+  private dashboardPostsSub: Subscription;
   xAxisData = ['2021-08-04', '2021-08-05', '2021-08-06', '2021-08-07', '2021-08-08', '2021-08-09', '2021-08-10'];
   data1 = [0.14, 0.13, 0.1, 0.35, 0.21, 0.18, 0.16];
 
@@ -27,6 +31,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log('In dashboard component');
+    this.costsIsLoading = true;
     this.showCosts();
 
     // this.dashboardService.getCosts();
@@ -42,6 +47,14 @@ export class DashboardComponent implements OnInit {
     //     console.log('costs: ' + this.costs);
     //     this.options.series[0].data = this.costs;
     //   });
+
+    this.postsIsLoading = true;
+    this.dashboardService.getPostCountByCategory();
+    this.dashboardPostsSub = this.dashboardService.getDashboardPostsUpdateListener()
+      .subscribe((postData: {value: number, name: string}[]) => {
+        this.postsIsLoading = false;
+        this.setOptionsPostsPieChart(postData);
+      });
   }
 
   getCosts() {
@@ -51,31 +64,60 @@ export class DashboardComponent implements OnInit {
   showCosts() {
     this.getCosts()
       .subscribe((data) => {
+        this.costsIsLoading = false;
         this.options = {
-          legend: {
-            data: ['Daily cost ($)'],
-            align: 'left',
-          },
-          tooltip: {},
           xAxis: {
-            data: data.body.dates,
-            silent: false,
-            splitLine: {
-              show: false,
-            },
+            type: 'category',
+            data: data.body.dates
           },
-          yAxis: {},
+          yAxis: {
+            type: 'value',
+            name: 'USD ($)'
+          },
           series: [
             {
-              name: 'Daily cost ($)',
-              type: 'bar',
               data: data.body.costs,
-              animationDelay: (idx) => idx * 10,
-            },
+              type: 'bar',
+            }
           ],
-          animationEasing: 'elasticOut',
-          animationDelayUpdate: (idx) => idx * 5,
+          tooltip: {
+            trigger: 'item'
+          }
         };
       });
+  }
+
+  setOptionsPostsPieChart(postData: {value: number, name: string}[]) {
+    this.optionsPostsPieChart = {
+      // title: {
+        // text: 'Number of posts by category',
+        // left: 'center'
+      // },
+      tooltip: {
+        trigger: 'item'
+      },
+      // legend: {
+        // orient: 'vertical',
+        // left: 'left'
+      // },
+      series: [
+        {
+          type: 'pie',
+          radius: '90%',
+          data: postData,
+          // data: [
+          //   {value: 2, name: 'AWS'},
+          //   {value: 1, name: 'Google Cloud'}
+          // ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    };
   }
 }

@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 import { Post } from './post.model';
+import { query } from '@angular/animations';
 
 const API_URL = environment.apiUrl;
 
@@ -16,30 +17,41 @@ export class PostsService {
   //   {id: '1', title: 'Title2', category: 'AWS', date: '2021-08-02', content: 'Content2'}
   // ]
   private posts: Post[] = [];
-  private postsUpdated = new Subject<Post[]>();
+  private postsUpdated = new Subject<{posts: Post[], totalPosts: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getPosts() {
+  getPosts(postsPerPage: number, currentPage: number) {
     // return [...this.posts];
+    const queryParams = `?postsPerPage=${postsPerPage}&currentPage=${currentPage}`;
     console.log('Getting posts from backend...')
     this.http
-      .get<{statusCode: number, body: any}>(API_URL + '/posts')
-      .pipe(map((postData) => {
-        // console.log(postData);
-        return postData.body.posts.map(post => {
+      // .get<{statusCode: number, body: any}>(API_URL + '/posts')
+      .get<{message: string, posts: any, totalPosts: number}>(API_URL + '/posts-proxy' + queryParams)
+      .pipe(
+        map((postData) => {
+          console.log(postData);
+          // return postData.body.posts.map(post => {
           return {
-            id: post._id,
-            title: post.title,
-            category: post.category,
-            date: post.date,
-            content: post.content
+            posts: postData.posts.map(post => {
+              return {
+                id: post._id,
+                title: post.title,
+                category: post.category,
+                date: post.date,
+                content: post.content
+              };
+            }),
+            totalPosts: postData.totalPosts
           };
-        });
-      }))
-      .subscribe(transformedPosts => {
-        this.posts = transformedPosts;
-        this.postsUpdated.next([...this.posts]);
+        })
+      )
+      .subscribe(transformedPostData => {
+        // console.log(transformedPosts);
+        this.posts = transformedPostData.posts;
+        this.postsUpdated.next({
+          posts: [...this.posts],
+          totalPosts: transformedPostData.totalPosts});
       });
   }
 
@@ -59,7 +71,8 @@ export class PostsService {
       date: date,
       content: content
     }
-    this.http.put(API_URL + '/posts', payload)
+    this.http
+      .put(API_URL + '/posts', payload)
       .subscribe(response => {
         this.router.navigate(['/posts']);
         // console.log(response);
