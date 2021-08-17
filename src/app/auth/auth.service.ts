@@ -35,10 +35,19 @@ export class AuthService {
     }
     this.http.post<{statusCode: number, body: {token: string, expiresIn: number}}>(API_URL + '/login', authData)
       .subscribe(response => {
-        console.log(response);
+
+        // Temporary solution for auth failed. When auth fails, it should go to the error block below,
+        // but it doesn't and it can't send false to authStatusListener to stop spinner, so here set
+        // false when auth fails.
+        if (response.statusCode != 200) {
+          console.log('Authorization failed');
+          this.authStatusListener.next(false);
+        }
+
         const token = response.body.token;
         this.token = token;
         if (token) {
+          console.log('Authorization success')
           const expiresInDuration = response.body.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
@@ -48,6 +57,9 @@ export class AuthService {
           this.saveAuthData(token, expirationDate);
           this.router.navigate(['/']);
         }
+      }, error => {
+        console.log(error);
+        this.authStatusListener.next(false);
       });
   }
 
