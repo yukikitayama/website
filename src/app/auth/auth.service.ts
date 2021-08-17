@@ -33,22 +33,27 @@ export class AuthService {
       email: email,
       password: password
     }
-    this.http.post<{statusCode: number, body: {token: string, expiresIn: number}}>(API_URL + '/login', authData)
+    // post() second argument is body
+    // this.http.post<{statusCode: number, body: {token: string, expiresIn: number}}>(API_URL + '/login', authData)
+    this.http.post<{message: string, token: string, expiresIn: number}>(API_URL + '/login-proxy', authData)
       .subscribe(response => {
+        // console.log(response);
 
         // Temporary solution for auth failed. When auth fails, it should go to the error block below,
         // but it doesn't and it can't send false to authStatusListener to stop spinner, so here set
         // false when auth fails.
-        if (response.statusCode != 200) {
-          console.log('Authorization failed');
-          this.authStatusListener.next(false);
-        }
+        // if (response.statusCode != 200) {
+        //   console.log('Authorization failed');
+        //   this.authStatusListener.next(false);
+        // }
 
-        const token = response.body.token;
+        // const token = response.body.token;
+        const token = response.token;
         this.token = token;
         if (token) {
           console.log('Authorization success')
-          const expiresInDuration = response.body.expiresIn;
+          // const expiresInDuration = response.body.expiresIn;
+          const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
