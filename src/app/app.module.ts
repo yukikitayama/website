@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// Angular Material
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -13,7 +14,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+// Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// Data visualization
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -51,6 +56,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     NgbModule,
     GoogleChartsModule,
     NgxEchartsModule.forRoot({

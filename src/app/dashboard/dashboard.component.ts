@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { EChartsOption } from 'echarts';
 
 import { DashboardService } from './dashboard.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 const API_URL = environment.apiUrl;
 
@@ -21,16 +23,27 @@ export class DashboardComponent implements OnInit {
   costs: number[];
   costsIsLoading = false;
   postsIsLoading = false;
+  startDate: FormControl;
+  endDate: FormControl;
   private datesSub: Subscription;
   private costsSub: Subscription;
   private dashboardPostsSub: Subscription;
-  xAxisData = ['2021-08-04', '2021-08-05', '2021-08-06', '2021-08-07', '2021-08-08', '2021-08-09', '2021-08-10'];
-  data1 = [0.14, 0.13, 0.1, 0.35, 0.21, 0.18, 0.16];
 
   constructor(private dashboardService: DashboardService, private http: HttpClient) {}
 
   ngOnInit(): void {
     // console.log('In dashboard component');
+
+    // Set default dates for cost chart
+    let startDate = new Date();
+    let pastDate = startDate.getDate() - 8 * 2;
+    startDate.setDate(pastDate);
+    this.startDate = new FormControl(startDate);
+    let endDate = new Date();
+    pastDate = endDate.getDate() - 1;
+    endDate.setDate(pastDate);
+    this.endDate = new FormControl(endDate);
+
     this.costsIsLoading = true;
     this.showCosts();
 
@@ -58,7 +71,11 @@ export class DashboardComponent implements OnInit {
   }
 
   getCosts() {
-    return this.http.get<{statusCode: number, body: {dates: string[], costs: number[]}}>(API_URL + '/costs');
+    let startDateParam = this.startDate.value.toISOString().split('T')[0];
+    let endDateParam = this.endDate.value.toISOString().split('T')[0];
+    // return this.http.get<{statusCode: number, body: {dates: string[], costs: number[]}}>(API_URL + '/costs');
+    return this.http
+      .get<{dates: string[], costs: number[]}>(API_URL + `/costs-proxy?startDate=${startDateParam}&endDate=${endDateParam}`);
   }
 
   showCosts() {
@@ -68,7 +85,8 @@ export class DashboardComponent implements OnInit {
         this.options = {
           xAxis: {
             type: 'category',
-            data: data.body.dates
+            boundaryGap: false,
+            data: data.dates
           },
           yAxis: {
             type: 'value',
@@ -76,8 +94,9 @@ export class DashboardComponent implements OnInit {
           },
           series: [
             {
-              data: data.body.costs,
-              type: 'bar',
+              data: data.costs,
+              type: 'line',
+              areaStyle: {}
             }
           ],
           tooltip: {
@@ -103,12 +122,8 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           type: 'pie',
-          radius: '90%',
+          radius: '70%',
           data: postData,
-          // data: [
-          //   {value: 2, name: 'AWS'},
-          //   {value: 1, name: 'Google Cloud'}
-          // ],
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
@@ -119,5 +134,17 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+  }
+
+  setStartDate(event: MatDatepickerInputEvent<Date>) {
+    // console.log(event);
+    this.startDate.setValue(event.value);
+    // console.log(this.startDate);
+  }
+
+  setEndDate(event: MatDatepickerInputEvent<Date>) {
+    // console.log(event);
+    this.endDate.setValue(event.value);
+    // console.log(this.endDate);
   }
 }
