@@ -22,6 +22,24 @@
           <mat-spinner *ngIf="costsIsLoading"></mat-spinner>
           <div echarts [options]="options" *ngIf="!costsIsLoading" class="demo-chart"></div>
         </mat-card-content>
+        <mat-card-actions>
+          <mat-form-field appearance="standard" class="pl-4">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <!-- <input matStartDate [value]="startDate.value"> -->
+              <input matStartDate [value]="startDate.value" (dateChange)="setStartDate($event)">
+              <!-- <input matEndDate [value]="endDate.value"> -->
+              <input matEndDate [value]="endDate.value" (dateChange)="setEndDate($event)">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="accent" matDatepickerApply (click)="showCosts()">Apply</button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+          </mat-form-field>
+        </mat-card-actions>
       </mat-card>
     </div>
 
@@ -61,6 +79,7 @@
         <li>Add API Gateway caching to architecture diagram.</li>
         <li>Develop Lambda/EventBridge to insert previous day cost to MongoDb and schedule daily.</li>
         <li>Add Lambda/EventBridge to architecture diagram</li>
+        <li>Make a dialog pop up when an error occurs by http error interceptor.</li>
       </ul>
     </mat-card-content>
   </mat-card>
