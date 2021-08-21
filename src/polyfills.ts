@@ -67,3 +67,11 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+/***************************************************************************************************
+ * AWS Amplify
+ */
+(window as any).global = window;
+(window as any).process = {
+  end: { DEBUG: undefined },
+};

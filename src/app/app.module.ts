@@ -21,6 +21,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Data visualization
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
+// AWS Amplify
+import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
+import Amplify from 'aws-amplify';
+import awsconfig from '../aws-exports';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -30,6 +34,8 @@ import { PostEditComponent } from './posts/post-edit/post-edit.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+
+Amplify.configure(awsconfig);
 
 @NgModule({
   declarations: [
@@ -62,7 +68,9 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     GoogleChartsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
-    })
+    }),
+    // configure app with AmplifyUIAngularModule
+    AmplifyUIAngularModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
