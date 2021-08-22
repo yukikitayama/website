@@ -1,5 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import {
+  onAuthUIStateChange,
+  CognitoUserInterface,
+  AuthState
+} from '@aws-amplify/ui-components';
 
 import { AuthService } from '../auth/auth.service';
 
@@ -11,10 +16,21 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  user: CognitoUserInterface | undefined;
+  authState: AuthState
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private ref: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
+    onAuthUIStateChange((authState, authData) => {
+      this.authState = authState;
+      this.user = authData as CognitoUserInterface;
+      this.ref.detectChanges();
+    });
+
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
@@ -29,5 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
+
+    return onAuthUIStateChange;
   }
 }
