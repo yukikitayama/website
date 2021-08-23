@@ -30,7 +30,7 @@ export class PostsService {
       .get<{message: string, posts: any, totalPosts: number}>(API_URL + '/posts-proxy' + queryParams)
       .pipe(
         map((postData) => {
-          console.log(postData);
+          // console.log(postData);
           // return postData.body.posts.map(post => {
           return {
             posts: postData.posts.map(post => {

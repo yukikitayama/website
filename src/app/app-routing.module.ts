@@ -7,6 +7,7 @@ import { PostEditComponent } from './posts/post-edit/post-edit.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from "./auth/auth.guard";
 import { AmplifySigninComponent } from './auth/amplify-signin/amplify-signin.component';
+import { PostTableComponent } from './posts/post-table/post-table.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: '', component: DashboardComponent, pathMatch: 'full' },
   { path: 'edit/:postId', component: PostEditComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'amplify-signin', component: AmplifySigninComponent }
+  { path: 'amplify-signin', component: AmplifySigninComponent },
+  { path: 'posts-table', component: PostTableComponent}
 ];
 
 @NgModule({

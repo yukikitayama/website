@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Data visualization
@@ -35,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AmplifySigninComponent } from './auth/amplify-signin/amplify-signin.component';
+import { PostTableComponent } from './posts/post-table/post-table.component';
 
 Amplify.configure(awsconfig);
 
@@ -46,7 +48,8 @@ Amplify.configure(awsconfig);
     PostListComponent,
     PostEditComponent,
     LoginComponent,
-    AmplifySigninComponent
+    AmplifySigninComponent,
+    PostTableComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ Amplify.configure(awsconfig);
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTableModule,
     NgbModule,
     GoogleChartsModule,
     NgxEchartsModule.forRoot({
