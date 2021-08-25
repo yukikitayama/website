@@ -39,7 +39,9 @@ export class PostsService {
                 title: post.title,
                 category: post.category,
                 date: post.date,
-                content: post.content
+                content: post.content,
+                urlGoogleSlides: post.url_google_slides,
+                urlYoutube: post.url_youtube
               };
             }),
             totalPosts: postData.totalPosts

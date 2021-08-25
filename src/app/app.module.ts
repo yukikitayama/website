@@ -37,6 +37,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AmplifySigninComponent } from './auth/amplify-signin/amplify-signin.component';
 import { PostTableComponent } from './posts/post-table/post-table.component';
+import { PostDetailComponent } from './posts/post-detail/post-detail.component';
 
 Amplify.configure(awsconfig);
 
@@ -49,7 +50,8 @@ Amplify.configure(awsconfig);
     PostEditComponent,
     LoginComponent,
     AmplifySigninComponent,
-    PostTableComponent
+    PostTableComponent,
+    PostDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -4,4 +4,6 @@ export interface Post {
   category: string;
   date: string;
   content: string;
+  urlGoogleSlides?: string;
+  urlYoutube?: string;
 }

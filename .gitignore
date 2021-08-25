@@ -3,6 +3,7 @@
 /src/environments
 /aws/lambda/*/*.zip
 /aws/lambda/*/package
+/pages
 
 # compiled output
 /dist

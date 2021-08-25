@@ -8,10 +8,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from "./auth/auth.guard";
 import { AmplifySigninComponent } from './auth/amplify-signin/amplify-signin.component';
 import { PostTableComponent } from './posts/post-table/post-table.component';
+import { PostDetailComponent } from './posts/post-detail/post-detail.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'posts', component: PostListComponent },
+  { path: 'posts/id', component: PostDetailComponent },
   { path: '', component: DashboardComponent, pathMatch: 'full' },
   { path: 'edit/:postId', component: PostEditComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
