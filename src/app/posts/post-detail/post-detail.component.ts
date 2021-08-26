@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 
 import { Post } from '../post.model'
 
@@ -21,8 +21,8 @@ export class PostDetailComponent implements OnInit {
     date: '2021-08-23',
     content: '<h2>Idea</h2><p>Hello</p>',
   };
-  urlYoutube;
-  urlGoogleSlides;
+  urlYoutube: SafeResourceUrl;
+  urlGoogleSlides: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) { }
 
