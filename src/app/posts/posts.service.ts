@@ -65,6 +65,10 @@ export class PostsService {
     return {...this.posts.find(p => p.id === id)};
   }
 
+  getPostByApi(id: string) {
+    return this.http.get<{post: any}>(API_URL + `/posts-proxy?id=${id}`);
+  }
+
   updatePost(id: string, title: string, category: string, date: string, content: string) {
     const payload = {
       id: id,

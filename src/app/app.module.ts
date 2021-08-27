@@ -38,6 +38,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { AmplifySigninComponent } from './auth/amplify-signin/amplify-signin.component';
 import { PostTableComponent } from './posts/post-table/post-table.component';
 import { PostDetailComponent } from './posts/post-detail/post-detail.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 Amplify.configure(awsconfig);
 
@@ -51,7 +52,8 @@ Amplify.configure(awsconfig);
     LoginComponent,
     AmplifySigninComponent,
     PostTableComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
