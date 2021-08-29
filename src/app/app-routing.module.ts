@@ -9,16 +9,18 @@ import { AuthGuard } from "./auth/auth.guard";
 import { AmplifySigninComponent } from './auth/amplify-signin/amplify-signin.component';
 import { PostTableComponent } from './posts/post-table/post-table.component';
 import { PostDetailComponent } from './posts/post-detail/post-detail.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
+  { path: '', component: DashboardComponent, pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'posts', component: PostListComponent },
-  { path: 'posts/id', component: PostDetailComponent },
-  { path: '', component: DashboardComponent, pathMatch: 'full' },
+  { path: 'posts-table', component: PostTableComponent },
+  { path: 'posts-table/:id', component: PostDetailComponent },
   { path: 'edit/:postId', component: PostEditComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'amplify-signin', component: AmplifySigninComponent },
-  { path: 'posts-table', component: PostTableComponent}
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

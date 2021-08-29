@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,6 +16,10 @@ const DATES: string[] = [
   '2021-07-01', '2021-07-02'
 ]
 
+const IDS: string[] = [
+  '61245b008c67a201c82f0ba7', '6107102eb42867b116feb322'
+]
+
 @Component({
   selector: 'app-post-table',
   templateUrl: './post-table.component.html',
@@ -27,10 +32,9 @@ export class PostTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    // Create posts
+  constructor(private router: Router) {
+    // Create array of Post objects
     const posts = Array.from([0, 1], x=> createNewPost(x));
-
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(posts);
   }
@@ -53,15 +57,15 @@ export class PostTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  navigateTo(row: any) {
-    console.log(row);
+  navigateTo(postId: string) {
+    this.router.navigate(['/posts-table', postId]);
   }
 }
 
 // Builds and returns a new Post.
 function createNewPost(id: number): Post {
   return {
-    id: id.toString(),
+    id: IDS[id],
     title: TITLES[id],
     category: CATEGORIES[id],
     date: DATES[id],
