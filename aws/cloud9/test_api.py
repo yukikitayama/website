@@ -1,16 +1,11 @@
 import requests
-import pprint
 
+API_URL = 'invoke_url_in_api_gateway'
 
-URL = 'https://el4z1kjt48.execute-api.us-west-1.amazonaws.com/test'
-
-
-r = requests.get(
-    url=f'{URL}/data?slope=1&intercept=-1&count=50'
+response = requests.get(
+    url=f'{API_URL}/data?intercept=10&slope=-0.5&count=50'
 )
-pprint.pprint(r.json())
+[print(data) for data in response.json()['data']]
 
-[print(x) for x in r.json()['data']]
-
-
-
+print(f'Status code: {response.status_code}')
+print(f'Data: {response.json()}')
