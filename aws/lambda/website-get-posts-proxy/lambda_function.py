@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from bson import json_util
+from bson.objectid import ObjectId
 import boto3
 import json
 import pprint
@@ -59,6 +60,25 @@ def lambda_handler(event, context):
             post['_id'] = post['_id']['$oid']
             posts.append(post)
 
+    # Get a single post by ID when ID parameter is specified
+    elif (event['queryStringParameters'] is not None and
+        'id' in event['queryStringParameters']):
+        postId = event['queryStringParameters']['id']
+        
+        # Find a single data
+        post = collection.find_one({'_id': ObjectId(postId)})
+        post = json.loads(json_util.dumps(post))
+        post['_id'] = post['_id']['$oid']
+        # pprint.pprint(post)
+        
+        return {
+            'statusCode': 200,
+            'headers': {'Access-Control-Allow-Origin': '*'},
+            'body': json.dumps({
+                'post': post
+            })
+        }
+        
     # Get all the posts because the paginator parameters are not specified
     else:
         # Get data from MongoDB
@@ -92,4 +112,9 @@ def lambda_handler(event, context):
 
 
 if __name__ == '__main__':
-    lambda_handler('', '')
+    event = {
+        'queryStringParameters': {
+            'id': '61245b008c67a201c82f0ba7'
+        }
+    }
+    print(lambda_handler(event, ''))
