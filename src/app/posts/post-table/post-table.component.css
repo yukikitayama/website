@@ -14,3 +14,17 @@ td, th {
 .mat-row:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.at-column-title {
+  width: 80%;
+}
+
+.mat-column-category {
+  width: 10%;
+  text-align: center;
+}
+
+.mat-column-date {
+  width: 10%;
+  text-align: center;
+}

@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Data visualization
@@ -74,6 +75,7 @@ Amplify.configure(awsconfig);
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
+    MatSortModule,
     NgbModule,
     GoogleChartsModule,
     NgxEchartsModule.forRoot({

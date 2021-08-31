@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { Post } from '../post.model';
+import { PostsService } from '../posts.service';
 
 const TITLES: string[] = [
   'Title1', 'Title2'
@@ -32,11 +33,19 @@ export class PostTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private postsService: PostsService
+  ) {
     // Create array of Post objects
-    const posts = Array.from([0, 1], x=> createNewPost(x));
+    // const posts = Array.from([0, 1], x=> createNewPost(x));
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(posts);
+    // this.dataSource = new MatTableDataSource(posts);
+    this.postsService
+      .getAllPosts()
+      .subscribe((response) => {
+        this.dataSource = new MatTableDataSource(response.posts);
+      });
   }
 
   ngOnInit(): void {
@@ -44,7 +53,7 @@ export class PostTableComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {

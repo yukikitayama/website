@@ -57,6 +57,15 @@ export class PostsService {
       });
   }
 
+  getAllPosts() {
+    return this.http
+      .get<{
+        message: string,
+        posts: any,
+        totalPosts: number
+      }>(API_URL + '/posts-proxy');
+  }
+
   getPostUpdateListener() {
     return this.postsUpdated.asObservable();
   }
@@ -66,7 +75,17 @@ export class PostsService {
   }
 
   getPostByApi(id: string) {
-    return this.http.get<{post: any}>(API_URL + `/posts-proxy?id=${id}`);
+    return this.http.get<{
+      post: {
+        _id: string,
+        title: string,
+        category: string,
+        date: string,
+        content: string,
+        url_google_slides?: string,
+        url_youtube?: string
+      }
+    }>(API_URL + `/posts-proxy?id=${id}`);
   }
 
   updatePost(id: string, title: string, category: string, date: string, content: string) {

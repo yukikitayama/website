@@ -1,5 +1,5 @@
 <main class="pb-5">
-  <mat-card>
+  <mat-card *ngIf="post">
     <mat-card-header>
       <mat-card-title>{{ post.title }}</mat-card-title>
       <mat-card-subtitle>Category: {{ post.category }}</mat-card-subtitle>

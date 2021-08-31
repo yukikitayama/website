@@ -40,20 +40,28 @@ export class PostDetailComponent implements OnInit {
       this.postsService.getPostByApi(id)
         .subscribe((response) => {
           // console.log(response);
-          this.post = response.post;
+          this.post = {
+            id: response.post._id,
+            title: response.post.title,
+            category: response.post.category,
+            date: response.post.date,
+            content: response.post.content,
+            urlGoogleSlides: response.post.url_google_slides,
+            urlYoutube: response.post.url_youtube
+          }
           // console.log(this.post);
-          console.log(this.post.urlYoutube);
+          if (this.post.urlGoogleSlides) {
+            this.urlGoogleSlides = this.sanitizer.bypassSecurityTrustResourceUrl(this.post.urlGoogleSlides);
+          }
           if (this.post.urlYoutube) {
-            console.log('Y');
-          } else {
-            console.log('N');
+            this.urlYoutube = this.sanitizer.bypassSecurityTrustResourceUrl(this.post.urlYoutube);
           }
         });
     });
-    let url = 'https://youtube.com/embed/HHBweXs0WIs';
-    let urlGoogleSlides = 'https://docs.google.com/presentation/d/e/2PACX-1vT9Je59mRtECCNncUEdjFmA4ahPRXAOxXqtPB37CmO-wpsjJcMRs79IDEIHazdolUmuoWYYm9W0WO6q/embed';
-    this.urlYoutube = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    this.urlGoogleSlides = this.sanitizer.bypassSecurityTrustResourceUrl(urlGoogleSlides);
+    // let url = 'https://youtube.com/embed/bm9cwhwlBuA';
+    // let urlGoogleSlides = 'https://docs.google.com/presentation/d/e/2PACX-1vT9Je59mRtECCNncUEdjFmA4ahPRXAOxXqtPB37CmO-wpsjJcMRs79IDEIHazdolUmuoWYYm9W0WO6q/embed';
+    // this.urlYoutube = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    // this.urlGoogleSlides = this.sanitizer.bypassSecurityTrustResourceUrl(urlGoogleSlides);
   }
 
 }
