@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { EChartsOption } from 'echarts';
@@ -29,7 +30,11 @@ export class DashboardComponent implements OnInit {
   private costsSub: Subscription;
   private dashboardPostsSub: Subscription;
 
-  constructor(private dashboardService: DashboardService, private http: HttpClient) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // console.log('In dashboard component');
@@ -146,5 +151,9 @@ export class DashboardComponent implements OnInit {
     // console.log(event);
     this.endDate.setValue(event.value);
     // console.log(this.endDate);
+  }
+
+  onNavigate() {
+    this.router.navigate(['/posts-table']);
   }
 }

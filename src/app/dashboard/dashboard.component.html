@@ -53,6 +53,9 @@
           <mat-spinner *ngIf="postsIsLoading"></mat-spinner>
           <div echarts [options]="optionsPostsPieChart" *ngIf="!postsIsLoading" class="demo-chart"></div>
         </mat-card-content>
+        <mat-card-actions class="ml-3 mb-2">
+          <button mat-raised-button color="accent" (click)="onNavigate()">Read Posts</button>
+        </mat-card-actions>
       </mat-card>
     </div>
 
@@ -77,8 +80,7 @@
         <li>Update get-post Lambda to get a single post, and allow edit page to load content even if you reload edit page. Probably I need to add param to API gateway, and add if statement to Lambda.</li>
         <li>Add a step to check whether token is valid (meaning decode the token with the same secret) to update-post Lambda.</li>
         <li>Make a dialog pop up when an error occurs by http error interceptor.</li>
-        <li>For Posts page, use Angular Material Table to make a table with sorting, pagination, and filtering (https://material.angular.io/components/table/examples)</li>
-        <li>Fix ngZone.run() navigation triggered outside Angular zone problem</li>
+        <li>Fix sorting in Angular Material Table</li>
         <li>Make Amplify auth service</li>
         <li>Make post editable when Amplify signedin</li>
       </ul>
