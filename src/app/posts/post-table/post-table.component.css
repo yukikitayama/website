@@ -38,6 +38,7 @@ td, th {
 
 .mat-row:hover {
   background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .at-column-title {
