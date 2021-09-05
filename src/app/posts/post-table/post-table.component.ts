@@ -11,7 +11,7 @@ import { PostsService } from '../posts.service';
 @Component({
   selector: 'app-post-table',
   templateUrl: './post-table.component.html',
-  styleUrls: ['./post-table.component.css']
+  styleUrls: ['./post-table.component.scss']
 })
 export class PostTableComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['title', 'category', 'date'];

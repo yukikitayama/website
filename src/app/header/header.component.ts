@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef, HostBinding } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {
   onAuthUIStateChange,
@@ -11,13 +12,15 @@ import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   user: CognitoUserInterface | undefined;
   authState: AuthState
+  toggleControl = new FormControl(false);
+  // @HostBinding('class') className = '';
 
   constructor(
     private authService: AuthService,
@@ -25,6 +28,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.toggleControl.valueChanges
+      .subscribe((darkMode) => {
+        console.log(darkMode);
+        const darkClassName = 'darkMode';
+        // this.className = darkMode ? darkClassName : '';
+      });
+
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData as CognitoUserInterface;

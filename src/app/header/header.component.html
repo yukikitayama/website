@@ -12,6 +12,9 @@
   </mat-menu>
   <span><a routerLink="/">Yuki Kitayama</a></span>
   <span class="spacer"></span>
+  <mat-icon class="m-2">brightness_5</mat-icon>
+  <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
+  <mat-icon class="m-2">bedtime</mat-icon>
   <a mat-button routerLink="/amplify-signin" *ngIf="authState !== 'signedin'">Amplify signin</a>
   <div *ngIf="authState === 'signedin' && user">
     <amplify-sign-out button-text="Amplify signout"></amplify-sign-out>

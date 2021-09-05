@@ -8,7 +8,7 @@ import { Post } from '../post.model';
 @Component({
   selector: 'app-post-edit',
   templateUrl: './post-edit.component.html',
-  styleUrls: ['./post-edit.component.css']
+  styleUrls: ['./post-edit.component.scss']
 })
 export class PostEditComponent implements OnInit {
   post: Post;

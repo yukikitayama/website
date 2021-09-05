@@ -8,7 +8,7 @@ import { PostsService } from '../posts.service';
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
-  styleUrls: ['./post-detail.component.css']
+  styleUrls: ['./post-detail.component.scss']
 })
 export class PostDetailComponent implements OnInit {
   // title: string = 'Make API by AWS Lambda and API Gateway';

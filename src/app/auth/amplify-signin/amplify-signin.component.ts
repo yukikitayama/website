@@ -5,7 +5,7 @@ import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 @Component({
   selector: 'app-amplify-signin',
   templateUrl: './amplify-signin.component.html',
-  styleUrls: ['./amplify-signin.component.css']
+  styleUrls: ['./amplify-signin.component.scss']
 })
 export class AmplifySigninComponent implements OnInit, OnDestroy {
   authState: AuthState;

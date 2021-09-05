@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // Bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Data visualization
@@ -59,6 +60,7 @@ Amplify.configure(awsconfig);
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -76,6 +78,7 @@ Amplify.configure(awsconfig);
     MatNativeDateModule,
     MatTableModule,
     MatSortModule,
+    MatSlideToggleModule,
     NgbModule,
     GoogleChartsModule,
     NgxEchartsModule.forRoot({
